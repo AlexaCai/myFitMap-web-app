@@ -10,6 +10,52 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+// Parent class for the workouts containing shared info for running and cycling
+class Workout {
+    date = new Date();
+    id = Date.now() + ''.slice(-10);
+
+    constructor(coords, distance, duration) {
+        this.coords = coords; // array [lat, lon]
+        this.distance = distance; // in km
+        this.duration = duration; // in min
+    }
+}
+
+// Child class of parent Workout class, specific to running workout
+class Running extends Workout {
+    constructor(coords, distance, duration, cadence) {
+        super(coords, distance, duration)
+        this.cadence = cadence;
+        this.calcPace();
+    }
+
+
+    calcPace() {
+        // min / km
+        this.pace = this.duration / this.distance;
+        return this.pace;
+    }
+}
+
+// Child class of parent Workout class, specific to cycling workout
+class Cycling extends Workout {
+    constructor(coords, distance, duration, elevation) {
+        super(coords, distance, duration)
+        this.elevation = elevation;
+        this.calcSpeed();
+    }
+
+    calcSpeed() {
+        // km / h
+        this.speed = this.distance / (this.duration / 60);
+        return this.speed;
+    }
+}
+
+
+//////////////////////////////////
+// APP architecture
 class App {
 
     // Properties of the object, as private class field (#). Both are private instance property (property present on all instances created through this class)
