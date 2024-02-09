@@ -134,7 +134,12 @@ class App {
         inputDuration.value = '';
         inputCadence.value = '';
         inputElevation.value = '';
+
+        form.style.display = 'none';
         form.classList.add('hidden');
+        setTimeout(function () {
+            return form.style.display = 'grid'
+        }, 1000)
     }
 
     _toggleElevationField() {
@@ -207,7 +212,8 @@ class App {
                 closeOnClick: false,
                 className: `${workout.type}-popup`
             }))
-            .setPopupContent('workout')
+            .setPopupContent(`${workout.type === 'running' ? '🏃' : '🚴‍♀️'} ${workout.description}`
+)
             .openPopup();
     }
 
