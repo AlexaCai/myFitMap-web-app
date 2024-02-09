@@ -15,6 +15,7 @@ class Workout {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}, ${this.date.getFullYear()}`;
     }
+
 }
 
 // Child class of parent Workout class, specific to running workout
@@ -75,6 +76,7 @@ class App {
 
     // Properties of the object, as private class field (#). Both are private instance property (property present on all instances created through this class)
     #map;
+    #mapZoomLevel = 14;
     #mapEvent;
     #workout = [];
 
@@ -87,6 +89,8 @@ class App {
         form.addEventListener('submit', this._newWorout.bind(this))
 
         inputType.addEventListener('change', this._toggleElevationField)
+
+        containerWorkouts.addEventListener('click', this._moveToPopup.bind(this))
     }
 
     _getPosition() {
@@ -110,7 +114,7 @@ class App {
         const coords = [latitude, longitude]
 
         // Code structure below taken directly from Leaflet librairy (and then adapted): https://leafletjs.com/index.html
-        this.#map = L.map('map').setView(coords, 14);
+        this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -213,7 +217,7 @@ class App {
                 className: `${workout.type}-popup`
             }))
             .setPopupContent(`${workout.type === 'running' ? '🏃' : '🚴‍♀️'} ${workout.description}`
-)
+            )
             .openPopup();
     }
 
@@ -267,6 +271,31 @@ class App {
         }
 
         form.insertAdjacentHTML('afterend', html);
+    }
+
+    _moveToPopup(event) {
+        const workoutElement = event.target.closest('.workout');
+        console.log(workoutElement);
+
+        if (!workoutElement) {
+            return
+        }
+
+        const workout = this.#workout.find(function (work) {
+            return work.id === workoutElement.dataset.id
+        })
+        console.log(workout)
+
+        // setView() is a method available on all 'map' objects, and its taken from Leaflet librairy
+        // First argument needed: coordinates
+        // Second argument needed: zoom level
+        // Third arugment: object of options (if wanted)
+        this.#map.setView(workout.coords, this.#mapZoomLevel, {
+            animate: true,
+            pan: {
+                duration: 1
+            }
+        });
     }
 }
 
