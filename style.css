@@ -15,6 +15,11 @@
   box-sizing: inherit;
 }
 
+ol, ul {
+  padding-left: unset;
+}
+
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -60,12 +65,27 @@ a:visited {
   margin-bottom: 2rem;
 }
 
+.instruction-button {
+  font-size: 13px;
+  margin-bottom: 2rem;
+}
+
+.modal-header {
+  border-bottom: unset;
+}
+
+.modal-body {
+  font-size: 15px;
+  color: black;
+  padding: 15px;
+}
+
 .remove-workouts {
   color: black;
   background-color: rgb(236, 125, 125);
+  font-size: 13px;
+  padding: 5px 5px;
   border-radius: 5px;
-  padding: 10px 10px;
-  align-self: center;
   margin-bottom: 2rem;
   cursor: pointer;
 }

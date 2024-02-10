@@ -7,6 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="shortcut icon" type="image/png" href="/icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap links -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="style.css" />
 
   <!-- Links from Leaflet librairy -->
@@ -25,9 +33,29 @@
     <img src="logo.png" alt="Logo" class="logo" />
     <h1 class="app-title">myFitMap</h1>
 
-    <div class="remove-workouts hidden">
-      <h3>Remove workouts</h3>
+    <button type="button" class="btn btn-success instruction-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      How to use myFitMap
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Click on the map where you want to add a workout. A small form will then appear on the left. Fill out the form, and a pin with your workout will appear automatically on the map. You can remove your workouts by clicking on the red button.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <button type="button" class="remove-workouts hidden">
+      Remove workouts
+    </button>
     <ul class="workouts">
       <form class="form hidden">
         <div class="form__row">
@@ -108,7 +136,7 @@
     <p class="copyright">
       &copy; Copyright by
       <a class="twitter-link" target="_blank" href="https://twitter.com/jonasschmedtman">Jonas Schmedtmann</a> (idea and
-      design). Developped by Alexande Cailhier.
+      design). Developed and design updated by Alexande Cailhier.
     </p>
   </div>
 
