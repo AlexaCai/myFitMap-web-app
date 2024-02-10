@@ -15,7 +15,6 @@ class Workout {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}, ${this.date.getFullYear()}`;
     }
-
 }
 
 // Child class of parent Workout class, specific to running workout
@@ -64,6 +63,7 @@ class Cycling extends Workout {
 //////////////////////////////////
 // APP architecture
 
+const removeWorkouts = document.querySelector('.remove-workouts');
 const form = document.querySelector('.form');
 const containerWorkouts = document.querySelector('.workouts');
 const inputType = document.querySelector('.form__input--type');
@@ -85,12 +85,17 @@ class App {
         // Call _getPosition function as soon as the app loads on the page and an app object is created
         this._getPosition();
 
+        // Get data from localStorage
+        this._getlocalStorage();
+
         // bind.(this) point to the app object when calling _newWorkout
-        form.addEventListener('submit', this._newWorout.bind(this))
+        form.addEventListener('submit', this._newWorkout.bind(this))
 
         inputType.addEventListener('change', this._toggleElevationField)
 
         containerWorkouts.addEventListener('click', this._moveToPopup.bind(this))
+
+        removeWorkouts.addEventListener('click', this._reset)
     }
 
     _getPosition() {
@@ -124,6 +129,10 @@ class App {
         // on() method is coming from Leaflet librairy
         // This allow to click on the map, get the coordinates of this specific location, and show a form by calling _showForm
         this.#map.on('click', this._showForm.bind(this))
+
+        this.#workout.forEach(work => {
+            this._renderWorkoutMarker(work);
+        });
     }
 
     _showForm(mapClick) {
@@ -151,7 +160,7 @@ class App {
         inputCadence.closest('.form__row').classList.toggle('form__row--hidden')
     }
 
-    _newWorout(event) {
+    _newWorkout(event) {
         event.preventDefault();
 
         // Function used to validate each inputs on workout form are numbers
@@ -203,6 +212,9 @@ class App {
         // Hide the form and clear input fields
         this._hideForm();
 
+        // Set localStorage to all workouts
+        this._setLocalStorage();
+
     }
 
     // Function used to display popup over workouts in map
@@ -221,6 +233,7 @@ class App {
             .openPopup();
     }
 
+    // Function used to display workouts on the left side of the screen
     _renderWorkout(workout) {
         // Part for running AND cycling objects
         let html = `
@@ -271,6 +284,8 @@ class App {
         }
 
         form.insertAdjacentHTML('afterend', html);
+
+        removeWorkouts.classList.remove('hidden')
     }
 
     _moveToPopup(event) {
@@ -296,6 +311,32 @@ class App {
                 duration: 1
             }
         });
+    }
+
+    _setLocalStorage() {
+        localStorage.setItem('workouts', JSON.stringify(this.#workout));
+    }
+
+    _getlocalStorage() {
+        const data = JSON.parse(localStorage.getItem('workouts'));
+        console.log(data)
+
+        if (!data) {
+            return
+        }
+
+        this.#workout = data;
+
+        this.#workout.forEach(work => {
+            this._renderWorkout(work);
+        })
+    }
+
+    // Remove workouts from local storage
+    _reset() {
+        localStorage.removeItem('workouts');
+        location.reload();
+        removeWorkouts.classList.add('.hidden')
     }
 }
 

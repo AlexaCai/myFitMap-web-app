@@ -52,7 +52,26 @@ a:visited {
 .logo {
   height: 5.2rem;
   align-self: center;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
+}
+
+.app-title {
+  align-self: center;
+  margin-bottom: 2rem;
+}
+
+.remove-workouts {
+  color: black;
+  background-color: rgb(236, 125, 125);
+  border-radius: 5px;
+  padding: 10px 10px;
+  align-self: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.remove-workouts.hidden {
+  display: none;
 }
 
 .workouts {
