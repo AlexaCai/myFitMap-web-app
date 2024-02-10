@@ -103,7 +103,6 @@ class App {
     };
 
     _loadMap(position) {
-        console.log(position);
         const { latitude } = position.coords;
         const { longitude } = position.coords;
 
