@@ -280,7 +280,6 @@ class App {
 
     _moveToPopup(event) {
         const workoutElement = event.target.closest('.workout');
-        console.log(workoutElement);
 
         if (!workoutElement) {
             return
