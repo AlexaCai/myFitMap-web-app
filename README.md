@@ -1,4 +1,4 @@
-# myFitMap-web-app
+# myFitMap web app
  
 **Table of content**
 
